@@ -1,0 +1,5 @@
+rootProject.name = 'zuul-replication'
+include 'server'
+include 'router'
+include 'reconciler'
+

@@ -1,0 +1,20 @@
+#!/bin/bash
+
+HOST='ec2-3-133-121-0.us-east-2.compute.amazonaws.com'
+OUTFILE=zuul.log
+
+STEP=2000000
+N=30
+
+M=1
+I=0
+
+> $OUTFILE
+
+for ((i=1; i<=$N; i++)); do
+  size=$((i*$STEP))
+  t=$(curl -s -w "%{time_total}\n" -o /dev/null http://$HOST:8080/server/size-bytes/$size/nchunks/$M/interval-ms/$I/reconcile/false)
+  res=$size,$M,$I,$t
+  echo $res
+  echo $res >> $OUTFILE
+done

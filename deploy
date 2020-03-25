@@ -1,0 +1,17 @@
+#!/bin/bash
+
+echo "Build boot jars"
+./gradlew :router:bootJar
+./gradlew :server:bootJar
+./gradlew :reconciler:bootJar
+
+echo "Copy Jars"
+scp server/build/libs/server-0.0.1-SNAPSHOT.jar aws-zuul:/home/ubuntu/server.jar
+scp router/build/libs/router-0.0.1-SNAPSHOT.jar aws-zuul:/home/ubuntu/router.jar
+scp reconciler/build/libs/reconciler-0.0.1-SNAPSHOT.jar aws-zuul:/home/ubuntu/reconciler.jar
+
+echo "Restart services"
+ssh aws-zuul 'pkill -f "java -jar"'
+ssh aws-zuul 'java -jar server.jar &> server.log &'
+ssh aws-zuul 'java -jar router.jar &> router.log &'
+ssh aws-zuul 'java -jar reconciler.jar &> reconciler.log &'
