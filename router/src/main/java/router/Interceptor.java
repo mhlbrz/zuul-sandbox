@@ -14,7 +14,8 @@ import java.io.*;
 public class Interceptor extends BufferedInputStream {
 
     private static final Logger log = LoggerFactory.getLogger(Interceptor.class);
-    private static final String RECONCILER_URI = "http://localhost:8095/reconcile";
+    private static final String RECONCILER_URI = "http://172.31.15.45:8095/reconcile";
+//    private static final String RECONCILER_URI = "http://localhost:8095/reconcile";
 
     private PipedInputStream in;
     private PipedOutputStream out;
